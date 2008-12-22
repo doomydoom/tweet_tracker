@@ -1,0 +1,1 @@
+APPLICATION_VERSION = '1.0d1 - San Diego'

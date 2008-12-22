@@ -4,5 +4,13 @@ version: "0.5"
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: TweetTracker
-releases: []
-
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.0d1 - San Diego
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-12-22 18:25:04.812000 Z
+    - Brian Bommarito <brian@doomydoom.net>
+    - created
+    - ""
