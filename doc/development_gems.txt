@@ -1,0 +1,21 @@
+Below are theh gems you will need to actively work on the development of
+TweetTracker or if you wish to run all the tests of the application. All of
+these are optional if you just want to run the system in production.
+
+Shoulda(sudo gem install thoughtbot-shoulda --source=http://gems.github.com):
+
+Shoulda is a gem which enhances the standard UnitTest with a rSpec like style,
+and some nice macros to ease writing tests against ActiveRecord relationships
+and validations.
+
+Factory Girl (gem install thoughtbot-factory_girl --source http://gems.github.com)
+
+Factory Girl is a gem that provides a nice DSL for generating model factories.
+I use this throughout testing in order to generate clean, known working models
+with all needed attributes.
+
+Ditz (sudo gem install ditz)
+
+Ditz is a distributed issue tracking system written in Ruby. All of the issues
+are tracked within the project itself, and can be modified by anyone who has
+Ditz installed.
