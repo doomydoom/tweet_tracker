@@ -21,7 +21,15 @@
 class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :updating_password
 
+  LOGIN_MIN_LENGTH = 4
+  LOGIN_MAX_LENGTH = 20
+  LOGIN_LENGTH_RANGE = LOGIN_MIN_LENGTH..LOGIN_MAX_LENGTH
+  PASSWORD_MIN_LENGTH = 6
+
   validates_presence_of     :login, :email
+  validates_length_of       :login,
+                            :in => LOGIN_LENGTH_RANGE,
+                            :allow_blank => true
 
   # We only want to check password validations if the password is being changed
   # or on a new record, so we seperate them out.
@@ -29,6 +37,9 @@ class User < ActiveRecord::Base
                             :if => :changing_password
   validates_confirmation_of :password,
                             :if => :changing_password
+  validates_length_of       :password,
+                            :minimum => PASSWORD_MIN_LENGTH,
+                            :allow_blank => true
    
 
   protected

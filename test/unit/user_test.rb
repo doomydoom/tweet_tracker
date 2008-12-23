@@ -3,11 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + "/../factories/user_factories"
 
 class UserTest < ActiveSupport::TestCase
   should_require_attributes :login, :email
+  should_ensure_length_in_range :login, (User::LOGIN_LENGTH_RANGE)
 
   # All the password validations are run only on a new_record? or if the
   # password is being updated.
   context "A user instance, given a new record or changing password" do
     should_require_attributes :password, :password_confirmation
+    should_ensure_length_at_least :password, User::PASSWORD_MIN_LENGTH
 
     # Shoulda has no checks for confirmation, so we write one.
     should "be invalid if password and password_confirmation do not match" do
