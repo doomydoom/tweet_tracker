@@ -8,5 +8,12 @@ class UserTest < ActiveSupport::TestCase
   # password is being updated.
   context "A user instance, given a new record or changing password" do
     should_require_attributes :password, :password_confirmation
+
+    # Shoulda has no checks for confirmation, so we write one.
+    should "be invalid if password and password_confirmation do not match" do
+      @user = Factory.build(:new_user, :password_confirmation => 'c1b2a3')
+      assert ! @user.valid?
+      assert_equal("doesn't match confirmation", @user.errors.on(:password))
+    end
   end
 end

@@ -21,12 +21,15 @@
 class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :updating_password
 
-  validates_presence_of :login, :email
+  validates_presence_of     :login, :email
 
   # We only want to check password validations if the password is being changed
   # or on a new record, so we seperate them out.
-  validates_presence_of :password, :password_confirmation,
-                        :if => :changing_password
+  validates_presence_of     :password, :password_confirmation,
+                            :if => :changing_password
+  validates_confirmation_of :password,
+                            :if => :changing_password
+   
 
   protected
 
