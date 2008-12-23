@@ -10,6 +10,9 @@ class UserTest < ActiveSupport::TestCase
   context "A user instance, given a new record or changing password" do
     should_require_attributes :password, :password_confirmation
     should_ensure_length_at_least :password, User::PASSWORD_MIN_LENGTH
+    should_protect_attributes :created_on, :updated_on, :remember_me_token,
+                              :remember_me_expires, :activation_token,
+                              :activated_at, :crypted_password, :salt
 
     # Shoulda has no checks for confirmation, so we write one.
     should "be invalid if password and password_confirmation do not match" do

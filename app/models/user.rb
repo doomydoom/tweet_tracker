@@ -20,6 +20,8 @@
 
 class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :updating_password
+  attr_accessible :login, :password, :password_confirmation, :email, :language,
+                  :timezone 
 
   LOGIN_MIN_LENGTH = 4
   LOGIN_MAX_LENGTH = 20
