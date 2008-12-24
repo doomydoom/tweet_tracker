@@ -19,3 +19,9 @@ Ditz (sudo gem install ditz)
 Ditz is a distributed issue tracking system written in Ruby. All of the issues
 are tracked within the project itself, and can be modified by anyone who has
 Ditz installed.
+
+FiveRuns Tuneup (sudo gem install fiveruns_tuneup)
+
+FiveRuns Tuneup is a live profiler. It shows the time spent within controllers
+and where the time is being spent. It's great for watching for 'n + 1'
+conditions.
