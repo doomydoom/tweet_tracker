@@ -33,6 +33,36 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(expected_crypted_password, @user.crypted_password)
   end
 
+  should "generate a activation_token if email activation is enabled" do
+    @user = User.create!(Factory.attributes_for(:new_user))
+    # Since the default email_activation is true, we are sure it's enabled
+    assert_not_nil @user.activation_token
+    # Activation token is a SHA256 hash, so it should be 64 chars
+    assert_equal(64, @user.activation_token.length)
+    # activated_on should be nil since the user has not been activated
+    assert_nil @user.activated_at
+  end
+
+  should "set the activated_at date and leave activation_token nil if email_activation is false" do
+    @user = Factory.build(:new_user)
+    Settings.email_activation = false
+    @user.save
+    assert_not_nil @user.activated_at
+    assert_nil @user.activation_token
+  end
+
+  should "should return true if the user is already activated" do
+    @user = Factory.build(:new_user)
+    Settings.email_activation = false
+    @user.save
+    assert @user.activated?
+  end
+
+  should "return false if the user is not already activated" do
+    @user = Factory(:new_user)
+    assert ! @user.activated?
+  end
+
   # Because of the way Shoulda works for uniqueness of, I am pulling these
   # out to their own contexts to avoid using a fixture.
   context "A user instance given an already existing record" do

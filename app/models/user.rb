@@ -61,7 +61,11 @@ class User < ActiveRecord::Base
                             :allow_blank => true
 
   before_save               :generate_salt_and_crypted_password
-   
+  before_create             :generate_activation_token
+
+  def activated?
+    self.activation_token.blank?
+  end
 
   protected
 
@@ -80,6 +84,12 @@ class User < ActiveRecord::Base
   def generate_salt_and_crypted_password
     self.password_salt = Digest::SHA256.hexdigest("--#{Time.now}--#{self.login}--")
     self.crypted_password = Digest::SHA256.hexdigest("--#{self.password_salt}--#{self.password}--")
+  end
+
+  def generate_activation_token
+    random_timestamp = Time.now.to_s.split(//).sort { rand }.join
+    self.activation_token = Digest::SHA256.hexdigest(random_timestamp) if Settings.email_activation
+    self.activated_at = Time.now.utc unless Settings.email_activation
   end
 
   private
