@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   validates_length_of       :login,
                             :in => LOGIN_LENGTH_RANGE,
                             :allow_blank => true
+  validates_uniqueness_of   :login, :email
 
   # We only want to check password validations if the password is being changed
   # or on a new record, so we seperate them out.
