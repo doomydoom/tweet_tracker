@@ -27,6 +27,22 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should_require_unique_attributes :login, :email
+
+    should "not require a password if the password is not being updated" do
+      @user = User.find_by_login('joeuser')
+      @user.login = 'joeuser2'
+      @user.save
+      assert @user.valid?
+    end
+
+    should "require a password if updating_password is set" do
+      @user = User.find_by_login('joeuser')
+      @user.login = 'joeuser2'
+      @user.updating_password = true
+      @user.save
+      assert ! @user.valid?
+      assert @user.errors.on(:password)
+    end
   end
 
   # All the password validations are run only on a new_record? or if the
