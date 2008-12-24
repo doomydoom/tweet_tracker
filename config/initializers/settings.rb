@@ -3,3 +3,4 @@
 # database.
 
 Settings.defaults[:email_activation] = true
+Settings.defaults[:site_title] = "TweetTracker"
