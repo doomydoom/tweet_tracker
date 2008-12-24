@@ -29,17 +29,32 @@ class User < ActiveRecord::Base
   PASSWORD_MIN_LENGTH = 6
 
   validates_presence_of     :login, :email
+
   validates_length_of       :login,
                             :in => LOGIN_LENGTH_RANGE,
                             :allow_blank => true
+
   validates_uniqueness_of   :login, :email
+
+  validates_format_of       :login,
+                            :with =>  /^[0-9a-z]+$/i,
+                            :message => "can only contain letters and numbers",
+                            :allow_blank => true
+
+  validates_format_of       :email,
+                            :with =>  /(\A(\s*)\Z)|(\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z)/i,
+                            :message => "must be in the format [user@domain.com]",
+                            :allow_blank => true   
+
 
   # We only want to check password validations if the password is being changed
   # or on a new record, so we seperate them out.
   validates_presence_of     :password, :password_confirmation,
                             :if => :changing_password
+
   validates_confirmation_of :password,
                             :if => :changing_password
+
   validates_length_of       :password,
                             :minimum => PASSWORD_MIN_LENGTH,
                             :allow_blank => true

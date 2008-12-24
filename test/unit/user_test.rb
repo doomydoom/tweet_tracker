@@ -3,10 +3,20 @@ require File.expand_path(File.dirname(__FILE__) + "/../factories/user_factories"
 
 class UserTest < ActiveSupport::TestCase
   should_require_attributes :login, :email
+
   should_ensure_length_in_range :login, (User::LOGIN_LENGTH_RANGE)
+
   should_protect_attributes :created_on, :updated_on, :remember_me_token,
                             :remember_me_expires, :activation_token,
                             :activated_at, :crypted_password, :salt
+
+  should_not_allow_values_for :login, "joe-user", "joe_user", "joe user",
+                              :message => "can only contain letters and numbers"
+
+  should_allow_values_for :login, "JoeUser", "joeuser"
+
+  should_not_allow_values_for :email, "joeuseratdomain.com", "joeuser@domaincom",
+                              :message => "must be in the format [user@domain.com]"
 
 
   # Because of the way Shoulda works for uniqueness of, I am pulling these
@@ -23,6 +33,7 @@ class UserTest < ActiveSupport::TestCase
   # password is being updated.
   context "A user instance, given a new record or changing password" do
     should_require_attributes :password, :password_confirmation
+
     should_ensure_length_at_least :password, User::PASSWORD_MIN_LENGTH
 
     # Shoulda has no checks for confirmation, so we write one.
