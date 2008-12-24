@@ -11,7 +11,7 @@ class UserTest < ActiveSupport::TestCase
                             :remember_me_expires, :activation_token,
                             :activated_at, :crypted_password, :salt
 
-  should_not_allow_values_for :login, "joe-user", "joe_user", "joe user",
+  should_not_allow_values_for :login, "joe-user", "joe_user",
                               :message => "can only contain letters and numbers"
 
   should_allow_values_for :login, "JoeUser", "joeuser"
@@ -61,6 +61,25 @@ class UserTest < ActiveSupport::TestCase
   should "return false if the user is not already activated" do
     @user = Factory(:new_user)
     assert ! @user.activated?
+  end
+
+  should "clean the login string before validation" do
+    @user = Factory(:new_user, :login => ' Joe User ') # This would be invalid normally
+    assert @user.valid?
+    assert_equal('joeuser', @user.login)
+  end
+
+  should "clean the email string before validation" do
+    @user = Factory(:new_user, :email => ' JoeUser @ Domain.Com ') # should be invalid
+    assert @user.valid?
+    assert_equal('joeuser@domain.com', @user.email)
+  end
+
+  should "strip the spaces before and after the user's password" do
+    @user = Factory(:new_user, :password => ' a1b2c3 ', :password_confirmation => ' a1b2c3 ')
+    assert @user.valid?
+    assert_equal('a1b2c3', @user.password)
+    assert_equal('a1b2c3', @user.password_confirmation)
   end
 
   # Because of the way Shoulda works for uniqueness of, I am pulling these

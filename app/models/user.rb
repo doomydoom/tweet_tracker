@@ -35,7 +35,8 @@ class User < ActiveRecord::Base
                             :in => LOGIN_LENGTH_RANGE,
                             :allow_blank => true
 
-  validates_uniqueness_of   :login, :email
+  validates_uniqueness_of   :login, :email,
+                            :case_sensitive => false
 
   validates_format_of       :login,
                             :with =>  /^[0-9a-z]+$/i,
@@ -62,6 +63,16 @@ class User < ActiveRecord::Base
 
   before_save               :generate_salt_and_crypted_password
   before_create             :generate_activation_token
+
+  # I usually like to use named callbacks for things like before_validate,
+  # but because of how simple these are, there is no point in creating 3
+  # seperate named callbacks
+  def before_validation
+    self.login = self.login.clean if self.login
+    self.email = self.email.clean if self.email
+    self.password = self.password.strip if self.password
+    self.password_confirmation = self.password_confirmation.strip if self.password_confirmation
+  end
 
   def activated?
     self.activation_token.blank?
