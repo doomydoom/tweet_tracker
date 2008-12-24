@@ -18,6 +18,7 @@
 #  updated_at          :datetime
 #
 
+require 'digest/sha2'
 class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :updating_password
   attr_accessible :login, :password, :password_confirmation, :email, :language,
@@ -58,6 +59,8 @@ class User < ActiveRecord::Base
   validates_length_of       :password,
                             :minimum => PASSWORD_MIN_LENGTH,
                             :allow_blank => true
+
+  before_save               :generate_salt_and_crypted_password
    
 
   protected
@@ -68,6 +71,15 @@ class User < ActiveRecord::Base
   # Used with the password validations in a callback on :if
   def changing_password
     return updating_password?
+  end
+
+  # before_save callbacks
+
+  # generates both the user's salt and crypted password. The salt is
+  # regenerated each time the password is changed for a little better security
+  def generate_salt_and_crypted_password
+    self.password_salt = Digest::SHA256.hexdigest("--#{Time.now}--#{self.login}--")
+    self.crypted_password = Digest::SHA256.hexdigest("--#{self.password_salt}--#{self.password}--")
   end
 
   private

@@ -1,5 +1,6 @@
 require 'test_helper'
 require File.expand_path(File.dirname(__FILE__) + "/../factories/user_factories")
+require 'digest/sha2'
 
 class UserTest < ActiveSupport::TestCase
   should_require_attributes :login, :email
@@ -18,6 +19,19 @@ class UserTest < ActiveSupport::TestCase
   should_not_allow_values_for :email, "joeuseratdomain.com", "joeuser@domaincom",
                               :message => "must be in the format [user@domain.com]"
 
+  should "create a salt, and then hash the salt with SHA256" do
+    @user = User.create!(Factory.attributes_for(:new_user))
+    assert_not_nil @user.password_salt
+    assert_equal(64, @user.password_salt.length)
+  end
+
+  should "create a crypted_password which is a combination of the password and salt" do
+    @user = User.create!(Factory.attributes_for(:new_user))
+    expected_crypted_password = Digest::SHA256.hexdigest("--#{@user.password_salt}--#{@user.password}--")
+    assert_not_nil @user.crypted_password
+    assert_equal(64, @user.crypted_password.length)
+    assert_equal(expected_crypted_password, @user.crypted_password)
+  end
 
   # Because of the way Shoulda works for uniqueness of, I am pulling these
   # out to their own contexts to avoid using a fixture.
