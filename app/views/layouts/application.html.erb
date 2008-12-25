@@ -14,7 +14,7 @@
 
 </head>
 
-<body id="<%= "#{controller.controller_name.tableize.singularize}_#{controller.action_name}" %> class="<%= "#{controller.controller_name.tableize.singularize} #{controller.action_name}" %>">
+<body id="<%= "#{controller.controller_name.tableize.singularize}_#{controller.action_name}" %>" class="<%= "#{controller.controller_name.tableize.singularize} #{controller.action_name}" %>">
 
   <% flash.each do | key, msg | %>
     <%= content_tag :div, msg, :class => [key, " message"], :id => "notice_#{key}" %>
