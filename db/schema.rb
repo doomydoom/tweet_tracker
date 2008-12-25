@@ -9,14 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081224144232) do
-
-  create_table "settings", :force => true do |t|
-    t.string   "var",        :null => false
-    t.text     "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20081222183043) do
 
   create_table "users", :force => true do |t|
     t.string   "login",               :limit => 20

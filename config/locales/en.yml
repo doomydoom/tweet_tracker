@@ -2,4 +2,13 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  users:
+    new:
+      header: 'Create a new user'
+      closed_registration_flash: 'User registrations are disabled, please contact your system administrator for an account'
+      login_label: 'Login (Required):'
+      password_label: 'Password (Required):'
+      password_confirmation_label: 'Password (Again):'
+      email_label: 'Email Address (Required):'
+      submit_label: 'Create User'
+      submit_disabled_label: 'Please Wait...'

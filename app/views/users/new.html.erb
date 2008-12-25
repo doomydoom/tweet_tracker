@@ -1,0 +1,22 @@
+<h1><%= t('users.new.header') %></h1>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= label(:user, :login, t('users.new.login_label')) %><br />
+    <%= f.text_field(:login) %>
+  </p>
+  <p>
+    <%= label(:user, :password, t('users.new.password_label')) %><br />
+    <%= f.password_field(:password) %>
+  </p>
+  <p>
+    <%= label(:user, :password_confirmation, t('users.new.password_confirmation_label')) %><br />
+    <%= f.password_field(:password_confirmation) %>
+  </p>
+  <p>
+    <%= label(:user, :email, t('users.new.email_label')) %><br />
+    <%= f.text_field(:email) %>
+  </p>
+  <%= submit_tag(t('users.new.submit_label'), :disable_with => t('users.new.submit_disable_label')) %>
+<% end %>
