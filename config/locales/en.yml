@@ -10,5 +10,6 @@ en:
       password_label: 'Password (Required):'
       password_confirmation_label: 'Password (Again):'
       email_label: 'Email Address (Required):'
+      timezone_label: 'Timezone:'
       submit_label: 'Create User'
       submit_disabled_label: 'Please Wait...'

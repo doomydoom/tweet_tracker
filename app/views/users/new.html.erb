@@ -18,5 +18,9 @@
     <%= label(:user, :email, t('users.new.email_label')) %><br />
     <%= f.text_field(:email) %>
   </p>
+  <p>
+    <%= label(:user, :timezone, t('users.new.timezone_label')) %><br />
+    <%= time_zone_select("user", 'timezone', /America/, :default => Settings.timezone) %>
+  </p>
   <%= submit_tag(t('users.new.submit_label'), :disable_with => t('users.new.submit_disable_label')) %>
 <% end %>

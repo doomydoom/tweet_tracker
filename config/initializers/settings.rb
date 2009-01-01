@@ -5,3 +5,4 @@
 Settings.defaults[:email_activation] = true
 Settings.defaults[:site_title] = "TweetTracker"
 Settings.defaults[:user_registrations] = true
+Settings.defaults[:timezone] = 'Pacific Time (US & Canada)'
