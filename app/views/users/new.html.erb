@@ -22,5 +22,9 @@
     <%= label(:user, :timezone, t('users.new.timezone_label')) %><br />
     <%= time_zone_select("user", 'timezone', /America/, :default => Settings.timezone) %>
   </p>
+  <p>
+    <%= label(:user, :language, t('users.new.locale_label')) %><br />
+    <%= select(:user, :language, LOCALES_AVAILABLE, {:selected => I18n.locale}, {}) %>
+  </p>
   <%= submit_tag(t('users.new.submit_label'), :disable_with => t('users.new.submit_disable_label')) %>
 <% end %>

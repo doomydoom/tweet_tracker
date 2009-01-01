@@ -10,7 +10,7 @@ class UsersControllerTest < ActionController::TestCase
     # Since open registrations is active, you should not have any flash showing.
     assert_nil flash[:warning]
     assert_select "form[action=?]", "/users"
-    assert_select "form p", :count => 5
+    assert_select "form p", :count => 6
   end
 
   test "on GET to :new with user_registrations disabled" do
