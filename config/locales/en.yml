@@ -87,4 +87,7 @@ en:
       timezone_label: 'Timezone:'
       locale_label: 'Locale:'
       submit_label: 'Create User'
-      submit_disabled_label: 'Please Wait...'
+      submit_disable_label: 'Please Wait...'
+    create:
+      no_email_activation_flash: 'Your account has been created, and you have been sucessfully logged into the system.'
+      email_activation_flash: 'You account has been successfully created. Please check your email in the next couple of minutes for an activation email to be able to use the system fully.'
